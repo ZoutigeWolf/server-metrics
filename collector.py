@@ -8,7 +8,7 @@ def send_data():
 
     for c in iter(p.stdout.readline, ""):
         data = json.loads(c)
-        with open(datetime.now().strftime("%Y-%m-%dT%H:%M:%S") + ".json", "w") as f:
+        with open("data/" + datetime.now().strftime("%Y-%m-%dT%H:%M:%S") + ".json", "w") as f:
             json.dump(data, f, indent=4)
 
 

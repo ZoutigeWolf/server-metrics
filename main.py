@@ -19,6 +19,8 @@ def metrics_last_get():
     data = sorted(data, reverse=True)
     print(data)
 
+    return ""
+
 
 if __name__ == "__main__":
     t = Thread(target=send_data, daemon=True)
