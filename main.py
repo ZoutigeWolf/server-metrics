@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, jsonify
 from datetime import datetime
 from threading import Thread
 
@@ -17,9 +17,8 @@ def metrics_get():
 def metrics_last_get():
     data = [datetime.strptime(p.removesuffix(".json"), "%Y-%m-%dT%H:%M:%S") for p in os.listdir("data")]
     data = sorted(data, reverse=True)
-    print(data)
 
-    return ""
+    return jsonify(list(data))
 
 
 if __name__ == "__main__":
