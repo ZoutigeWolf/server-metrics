@@ -1,3 +1,4 @@
+import json
 import os
 from flask import Flask, jsonify
 from datetime import datetime
@@ -8,6 +9,11 @@ from collector import send_data
 app = Flask(__name__)
 
 
+def load_json(p: str):
+    with open(p) as f:
+        return json.load(f)
+
+
 @app.get("/metrics")
 def metrics_get():
     pass
@@ -15,10 +21,12 @@ def metrics_get():
 
 @app.get("/metrics/last")
 def metrics_last_get():
-    data = [datetime.strptime(p.removesuffix(".json"), "%Y-%m-%dT%H:%M:%S") for p in os.listdir("data")]
-    data = sorted(data, reverse=True)
+    files = [datetime.strptime(p.removesuffix(".json"), "%Y-%m-%dT%H:%M:%S") for p in os.listdir("data")]
+    file_name = sorted(files, reverse=True)[0].strftime("%Y-%m-%dT%H:%M:%S") + ".json"
 
-    return jsonify(list(data))
+    data = load_json("data/" + file_name)
+
+    return jsonify(data)
 
 
 if __name__ == "__main__":
